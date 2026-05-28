@@ -46,3 +46,13 @@ To run, submit a PBS job using the [export-issr.pbs](pbs-scripts/export-issr.pbs
 ```console
 qsub -v "IDENTIFIER=export-issr" -N export-issr export-issr.pbs
 ```
+
+### Step 4: Compute the odds ratio for the effect of ISSRs on MOG CAT
+
+This step uses the exported ISSRs, distribution parameters for mapping the diagnostics to EDR and the exported turbulence diagnostics stored in the `zarr` file format.
+
+To run, submit a PBS job using the [compute-odds-ratio.pbs](pbs-scripts/compute-odds-ratio.pbs) script,
+
+```console
+qsub -v "IDENTIFIER=odds-ratio" -N odds-ratio compute-odds-ratio.pbs
+```
