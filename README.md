@@ -34,3 +34,13 @@ This step is to speed up the conversion of the turbulence diagnostics to EDR by 
 ```console
 qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=/path/to/dist-params-config.yaml, LITE_COMMAND=distribution-parameters, LOAD_FROM=precomputed_from_zarr" -N "name-of-run" thresholds.pbs
 ```
+
+### Step 3: Export Ice Supersaturated Regions
+
+Similarly, this step is to speed up the computing of the odds ratio by precomputing the ISSRs. This uses the [export-issr.py](rojak-scripts/export-issr.py) script.
+
+To submit the PBS job,
+
+```console
+qsub -v "IDENTIFIER=export-issr" -N export-issr array_probilities.pbs
+```
