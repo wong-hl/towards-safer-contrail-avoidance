@@ -441,7 +441,7 @@ def seasonal_variation(
         )
 
         difference = marginal_sign * (all_odds_ratios - marginal_case)
-        fg = difference.to_dataarray("diagnostics").plot(
+        _fe = difference.to_dataarray("diagnostics").plot(
             row="conditions",
             col="diagnostics",
             x="latitude",
@@ -487,7 +487,12 @@ def create_plots(
         is_turb = sel_for_season(is_turb, target_season)
 
     # sum_over_cases = [None, ["time", "longitude"], ["time", "longitude", "latitude"]]
-    sum_over_cases = [None, ["time"], ["time", "longitude"], ["time", "longitude", "latitude"]]
+    sum_over_cases = [
+        None,
+        ["time"],
+        ["time", "longitude"],
+        ["time", "longitude", "latitude"],
+    ]
 
     for this_sum_over_case in sum_over_cases:
         conditional_odds_ratio_cases(
