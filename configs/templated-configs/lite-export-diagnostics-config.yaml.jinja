@@ -1,0 +1,14 @@
+spatial_domain:
+  maximum_latitude: 70
+  maximum_longitude: 180
+  minimum_latitude: -70
+  minimum_longitude: -180
+name: {{ case }}
+output_dir: /path/to/export/dir/{{ case }}
+chunks:
+  pressure_level: 6
+  latitude: 721
+  longitude: 1440
+data_dir: /path/to/raw/era5/data/{{ case }}
+diagnostics:
+  - {{ target_diagnostic }}

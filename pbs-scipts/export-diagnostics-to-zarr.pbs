@@ -1,0 +1,51 @@
+#!/bin/bash
+#PBS -l walltime=5:00:00
+#PBS -lselect=1:ncpus=12:mem=920gb
+#PBS -J 1-27
+
+module load tools/prod
+
+### ---- Load conda and activate python environment
+
+module load miniforge/3
+eval "$(~/miniforge3/bin/conda shell.bash hook)"
+conda activate rojak
+
+### ---- Copy source code and config file over
+
+config_name_with_array_index="${CONFIG_FILE_PATH}-${PBS_ARRAY_INDEX}.yaml"
+
+cp -r "${PBS_O_WORKDIR}/${SOURCE_DIR}" "$TMPDIR"
+
+config_dir=$(dirname "${config_name_with_array_index}")
+mkdir -p "${TMPDIR}/${config_dir}"
+cp "${PBS_O_WORKDIR}/${config_name_with_array_index}" "${TMPDIR}/${config_name_with_array_index}" || exit
+
+### ---- Copy config file over
+
+output_dir=$(grep "output_dir:" "${PBS_O_WORKDIR}/${config_name_with_array_index}" | cut -d':' -f2 | tr -d ' ')
+current_time=$(date +"%Y-%m-%d_%H-%M-%S")
+echo "$output_dir"
+mkdir -p "$output_dir"
+config_basename=$(basename -s .yaml "${config_name_with_array_index}")
+cp "${PBS_O_WORKDIR}/${config_name_with_array_index}" "${output_dir}/${current_time}_${config_basename}.yaml" || exit
+
+### ---- Move into folder where code will execute
+
+cd "$TMPDIR/$SOURCE_DIR" || exit
+
+# Delete existing venv (hopefully fixes path issue)
+rm -r .venv
+
+uv venv --python 3.12
+
+# shellcheck source=/dev/null
+source .venv/bin/activate
+
+uv sync --all-groups --no-group dev --no-group docs --no-group test --all-extras
+
+cd "$TMPDIR" || exit
+
+rojak lite turbulence "${LITE_COMMAND:-export-diagnostic}" "${TMPDIR}/${config_name_with_array_index}" || exit
+
+echo $?
