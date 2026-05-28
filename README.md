@@ -21,15 +21,15 @@ This repo is for reproducing the results in this paper
    uv run template-files.py
    ```
 
-2. Submit a job to the PBS queue using,
+2. This uses `rojak`'s `lite` interface to export the turbulence diagnostics to `zarr` file format. Submit a job to the PBS queue using,
 
    ```console
    qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=path/to/templated/configs, LITE_COMMAND=export-diagnostic" -N "export-diagnostics" export-diagnostics-to-zarr.pbs
    ```
 
-### Step 2: Export Distribution Parameters
+### Step 2: Export Distribution Parameters
 
-This step is to speed up the conversion of the turbulence diagnostics to EDR by precomputing what the mean and standard deviation of each of the turbulence diagnostics.
+This step is to speed up the conversion of the turbulence diagnostics to EDR by precomputing what the mean and standard deviation of each of the turbulence diagnostics. It uses `rojak`'s `lite` interface to perform the computation.
 
 ```console
 qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=/path/to/dist-params-config.yaml, LITE_COMMAND=distribution-parameters, LOAD_FROM=precomputed_from_zarr" -N "name-of-run" thresholds.pbs
