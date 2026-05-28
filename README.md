@@ -10,7 +10,7 @@ This repo is for reproducing the results in this paper
 > The folder structure in the repository does not directly map to the folder structure these script were run in.
 > Path modifications are required to match your system to reproduce the results
 
-### Export Diagnostics to Zarr
+### Step 1: Export Diagnostics to Zarr
 
 > [!important]
 > [`uv`](https://docs.astral.sh/uv/) has been used to run this [script so that it can directly manage the dependencies for it](https://docs.astral.sh/uv/guides/scripts/)
@@ -26,3 +26,11 @@ This repo is for reproducing the results in this paper
    ```console
    qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=path/to/templated/configs, LITE_COMMAND=export-diagnostic" -N "export-diagnostics" export-diagnostics-to-zarr.pbs
    ```
+
+### Step 2: Export Distribution Parameters
+
+This step is to speed up the conversion of the turbulence diagnostics to EDR by precomputing what the mean and standard deviation of each of the turbulence diagnostics.
+
+```console
+qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=/path/to/dist-params-config.yaml, LITE_COMMAND=distribution-parameters, LOAD_FROM=precomputed_from_zarr" -N "name-of-run" thresholds.pbs
+```
