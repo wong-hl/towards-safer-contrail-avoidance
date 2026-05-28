@@ -21,7 +21,7 @@ This repo is for reproducing the results in this paper
    uv run template-files.py
    ```
 
-2. This uses `rojak`'s `lite` interface to export the turbulence diagnostics to `zarr` file format. Submit a job to the PBS queue using,
+2. This uses `rojak`'s `lite` interface to export the turbulence diagnostics to `zarr` file format. Submit a job to the PBS queue using the [export-diagnostics-to-zarr.pbs](pbs-scripts/compute-distribution-params.pbs) script,
 
    ```console
    qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=path/to/templated/configs, LITE_COMMAND=export-diagnostic" -N "export-diagnostics" export-diagnostics-to-zarr.pbs
@@ -31,16 +31,18 @@ This repo is for reproducing the results in this paper
 
 This step is to speed up the conversion of the turbulence diagnostics to EDR by precomputing what the mean and standard deviation of each of the turbulence diagnostics. It uses `rojak`'s `lite` interface to perform the computation.
 
+To run, submit a job to the PBS queue using the [compute-distribution-params.pbs](pbs-scripts/compute-distribution-params.pbs) script,
+
 ```console
-qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=/path/to/dist-params-config.yaml, LITE_COMMAND=distribution-parameters, LOAD_FROM=precomputed_from_zarr" -N "name-of-run" thresholds.pbs
+qsub -v "SOURCE_DIR=/path/to/rojak/source/code, CONFIG_FILE_PATH=/path/to/dist-params-config.yaml, LITE_COMMAND=distribution-parameters, LOAD_FROM=precomputed_from_zarr" -N "name-of-run" compute-distribution-params.pbs
 ```
 
 ### Step 3: Export Ice Supersaturated Regions
 
 Similarly, this step is to speed up the computing of the odds ratio by precomputing the ISSRs. This uses the [export-issr.py](rojak-scripts/export-issr.py) script.
 
-To submit the PBS job,
+To run, submit a PBS job using the [export-issr.pbs](pbs-scripts/export-issr.pbs)
 
 ```console
-qsub -v "IDENTIFIER=export-issr" -N export-issr array_probilities.pbs
+qsub -v "IDENTIFIER=export-issr" -N export-issr export-issr.pbs
 ```
