@@ -4,6 +4,14 @@ This repo is for reproducing the results in this paper
 
 [`rojak`](https://github.com/ImperialCollegeLondon/rojak) version of the code for this is [v1.0.1](https://github.com/ImperialCollegeLondon/rojak/releases/tag/v1.0.1)
 
+## Obtaining ERA5 data
+
+This uses ERA5 data. For convenience, `rojak` contains methods to get this data. For example, the command below gets the required data for the year 2023, 
+
+```console
+rojak data meteorology retrieve -s era5 -y 2023 -m -1 -d -1 -n pressure-level --default-name cat -o /path/to/store/data/in
+```
+
 ## Steps To Reproduce on HPC with PBS Queue
 
 > [!note]
