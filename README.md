@@ -1,4 +1,4 @@
-# PUT IN FINAL NAME OF PAPER
+# Towards safer contrail avoidance: understanding the link between ice supersaturated regions and clear-air turbulence
 
 This repo is for reproducing the results in this paper
 
