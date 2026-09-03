@@ -6,7 +6,7 @@ This repo is for reproducing the results in this paper
 
 ## Obtaining ERA5 data
 
-This uses ERA5 data. For convenience, `rojak` contains methods to get this data. For example, the command below gets the required data for the year 2023, 
+This uses ERA5 data. For convenience, `rojak` contains methods to get this data. For example, the command below gets the required data for the year 2023,
 
 ```console
 rojak data meteorology retrieve -s era5 -y 2023 -m -1 -d -1 -n pressure-level --default-name cat -o /path/to/store/data/in
@@ -64,3 +64,7 @@ To run, submit a PBS job using the [compute-odds-ratio.pbs](pbs-scripts/compute-
 ```console
 qsub -v "IDENTIFIER=odds-ratio" -N odds-ratio compute-odds-ratio.pbs
 ```
+
+### Step 5: Compute the mean signed change in the log odds ratio
+
+Execute the Jupyter notebook - [mean-vartheta.ipynb](rojak-scripts/1-mean-vartheta.ipynb) - in a Python environment with `v1.0.1` of `rojak` installed.
