@@ -65,6 +65,10 @@ To run, submit a PBS job using the [compute-odds-ratio.pbs](pbs-scripts/compute-
 qsub -v "IDENTIFIER=odds-ratio" -N odds-ratio compute-odds-ratio.pbs
 ```
 
-### Step 5: Compute the mean signed change in the log odds ratio
+### Step 5: Compute the seasonal difference in odds ratio
 
-Execute the Jupyter notebook - [mean-vartheta.ipynb](rojak-scripts/1-mean-vartheta.ipynb) - in a Python environment with `v1.0.1` of `rojak` installed.
+Execute the Jupyter notebook - [mean-diff-theta.ipynb](rojak-scripts/mean-diff-theta.ipynb) - in a Python environment with `v1.0.1` of `rojak` installed.
+
+### Step 6: Create the instantaneous plots for the case study
+
+Execute the Jupyter notebook - [case-study.ipynb](rojak-scripts/case-study.ipynb) - in a Python environment with `v1.0.1` of `rojak` installed.
